@@ -1,0 +1,76 @@
+<mvc:View controllerName="ch.novobc.sapui5.controller.List" xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" displayBlock="true" xmlns="sap.m">
+  <Page id="listPage" title="{i18n>ListTitle}" showHeader="false">
+		<!-- <subHeader>
+			<Bar id="_IDGenBar1">
+				<contentLeft>
+					<SearchField id="_IDGenSearchField1" search="handleSearch"/>
+				</contentLeft>
+			</Bar>
+		</subHeader> -->
+		<Panel expandable="false" expanded="true">
+			<content>
+		
+		<f:SimpleForm id="SimpleFormChange354"
+
+			editable="true"
+
+			layout="ResponsiveGridLayout"
+
+			title="{i18n>titleNovoInnovationDay}"
+
+			labelSpanXL="3"
+
+			labelSpanL="3"
+
+			labelSpanM="3"
+
+			labelSpanS="12"
+
+			adjustLabelSpan="false"
+
+			emptySpanXL="4"
+
+			emptySpanL="4"
+
+			emptySpanM="4"
+
+			emptySpanS="0"
+
+			columnsXL="1"
+
+			columnsL="1"
+
+			columnsM="1"
+
+			singleContainerFullSize="false" >
+
+				<l:VerticalLayout class="sapUiSmallMarginBeginEnd sapUiLargeMarginBegin" width="50%" >
+									
+								
+				
+
+				<Input id="inputMail" width="50%" placeholder="{i18n>inputEmail}" />
+				<Button press="onPressGo" text="{i18n>buttonAnmelden}" />
+				
+
+								
+							</l:VerticalLayout>
+							
+
+		</f:SimpleForm>
+			</content>
+		</Panel>
+		<!-- <List id="list" items="{/Participants}"> -->
+			<!-- <ObjectListItem id="_IDGenObjectListItem1" type="Navigation" press="handleListItemPress" title="{email}" >
+				<attributes>
+					<ObjectAttribute id="_IDGenObjectAttribute1" text="{lastName}"/>
+				</attributes>
+				<firstStatus>
+					<ObjectStatus id="_IDGenObjectStatus1" text="{firstName}" />
+				</firstStatus>
+			</ObjectListItem>
+		</List> -->
+
+
+    </Page>
+</mvc:View>

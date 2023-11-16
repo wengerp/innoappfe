@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+        <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="NIDService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Participants" EntityType="NIDService.Participants">
+                    <NavigationPropertyBinding Path="presentations" Target="ParticipantToPresentation"/>
+                </EntitySet>
+                <EntitySet Name="Presentations" EntityType="NIDService.Presentations">
+                    <NavigationPropertyBinding Path="referee" Target="Referees"/>
+                    <NavigationPropertyBinding Path="room" Target="Rooms"/>
+                    <NavigationPropertyBinding Path="participants" Target="ParticipantToPresentation"/>
+                </EntitySet>
+                <EntitySet Name="ParticipantToPresentation" EntityType="NIDService.ParticipantToPresentation">
+                    <NavigationPropertyBinding Path="participant" Target="Participants"/>
+                    <NavigationPropertyBinding Path="presentation" Target="Presentations"/>
+                </EntitySet>
+                <EntitySet Name="Referees" EntityType="NIDService.Referees">
+                    <NavigationPropertyBinding Path="Presentations" Target="Presentations"/>
+                </EntitySet>
+                <EntitySet Name="Rooms" EntityType="NIDService.Rooms">
+                    <NavigationPropertyBinding Path="Presentations" Target="Presentations"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="Participants">
+                <Key>
+                    <PropertyRef Name="participantId"/>
+                </Key>
+                <Property Name="participantId" Type="Edm.String" Nullable="false"/>
+                <Property Name="firstName" Type="Edm.String"/>
+                <Property Name="lastName" Type="Edm.String"/>
+                <Property Name="function" Type="Edm.String"/>
+                <Property Name="email" Type="Edm.String"/>
+                <Property Name="organisation" Type="Edm.String"/>
+                <Property Name="department" Type="Edm.String"/>
+                <Property Name="street" Type="Edm.String"/>
+                <Property Name="number" Type="Edm.String"/>
+                <Property Name="postal" Type="Edm.String"/>
+                <Property Name="city" Type="Edm.String"/>
+                <NavigationProperty Name="presentations" Type="Collection(NIDService.ParticipantToPresentation)" Partner="participant">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Presentations">
+                <Key>
+                    <PropertyRef Name="presentationId"/>
+                </Key>
+                <Property Name="presentationId" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="timeslot" Type="Edm.String"/>
+                <Property Name="presentationDesc" Type="Edm.String"/>
+                <NavigationProperty Name="referee" Type="NIDService.Referees" Partner="Presentations">
+                    <ReferentialConstraint Property="referee_refereeId" ReferencedProperty="refereeId"/>
+                </NavigationProperty>
+                <Property Name="referee_refereeId" Type="Edm.String"/>
+                <NavigationProperty Name="room" Type="NIDService.Rooms" Partner="Presentations">
+                    <ReferentialConstraint Property="room_roomId" ReferencedProperty="roomId"/>
+                </NavigationProperty>
+                <Property Name="room_roomId" Type="Edm.String"/>
+                <NavigationProperty Name="participants" Type="Collection(NIDService.ParticipantToPresentation)" Partner="presentation">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="ParticipantToPresentation">
+                <Key>
+                    <PropertyRef Name="participant_participantId"/>
+                    <PropertyRef Name="presentation_presentationId"/>
+                </Key>
+                <NavigationProperty Name="participant" Type="NIDService.Participants" Partner="presentations">
+                    <ReferentialConstraint Property="participant_participantId" ReferencedProperty="participantId"/>
+                </NavigationProperty>
+                <Property Name="participant_participantId" Type="Edm.String" Nullable="false"/>
+                <NavigationProperty Name="presentation" Type="NIDService.Presentations" Partner="participants">
+                    <ReferentialConstraint Property="presentation_presentationId" ReferencedProperty="presentationId"/>
+                </NavigationProperty>
+                <Property Name="presentation_presentationId" Type="Edm.Guid" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="Referees">
+                <Key>
+                    <PropertyRef Name="refereeId"/>
+                </Key>
+                <Property Name="refereeId" Type="Edm.String" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+                <Property Name="bio" Type="Edm.String"/>
+                <Property Name="image" Type="Edm.Stream"/>
+                <NavigationProperty Name="Presentations" Type="Collection(NIDService.Presentations)" Partner="referee"/>
+            </EntityType>
+            <EntityType Name="Rooms">
+                <Key>
+                    <PropertyRef Name="roomId"/>
+                </Key>
+                <Property Name="roomId" Type="Edm.String" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+                <Property Name="description" Type="Edm.String"/>
+                <Property Name="location" Type="Edm.String"/>
+                <NavigationProperty Name="Presentations" Type="Collection(NIDService.Presentations)" Partner="room"/>
+            </EntityType>
+            <Annotations Target="NIDService.EntityContainer/Participants">
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="NIDService.EntityContainer/Presentations">
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="NIDService.EntityContainer/ParticipantToPresentation">
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="NIDService.EntityContainer/Referees">
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="NIDService.Referees/image">
+                <Annotation Term="Core.MediaType" String="image/png"/>
+            </Annotations>
+            <Annotations Target="NIDService.EntityContainer/Rooms">
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

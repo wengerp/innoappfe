@@ -1,0 +1,170 @@
+<mvc:View
+    controllerName="ch.novobc.sapui5.controller.Detail"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:forms="sap.ui.layout.form"
+    xmlns:uxap="sap.uxap"
+    xmlns:f="sap.f"
+>
+    <Page
+        id="detail"
+        showNavButton="false"
+        navButtonPress="handleNavButtonPress"
+    >
+        <ObjectHeader
+            id="_IDGenObjectHeader1"
+            title="{email}"
+        >
+            <attributes>
+                <ObjectAttribute
+                    id="_IDGenObjectAttribute1"
+                    text="{lastName}"
+                />
+                <ObjectAttribute
+                    id="_IDGenObjectAttribute2"
+                    text="{firstName}"
+                />
+                <ObjectAttribute
+                    id="_IDGenObjectAttribute3"
+                    text="{participantId}"
+                />
+                  <ObjectAttribute
+                    id="_IDGenObjectAttribute4"
+                    text="{organisation}"
+                />
+            </attributes>
+        </ObjectHeader>
+        <Table items="{ path: 'presentations' }">
+            <columns>
+                <Column width="12em">
+                    <Text text="{i18n>objectPageInformation}" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem vAlign="Middle">
+                    <cells>
+                        <Panel
+                            expandable="true"
+                            headerText="{presentation/timeslot} : {presentation/presentationDesc}"
+                            width="auto"
+                            class="sapUiResponsiveMargin"
+                        >
+                            <content>
+                                <forms:SimpleForm
+                                    labelSpanL="4"
+                                    labelSpanM="4"
+                                    editable="false"
+                                    labelSpanS="4"
+                                    emptySpanL="0"
+                                    emptySpanM="0"
+                                    emptySpanS="0"
+                                    maxContainerCols="2"
+                                    layout="ResponsiveGridLayout"
+                                    width="100%"
+                                >
+                                    <core:Title
+                                        text="{i18n>objectPageReferat}"
+                                    />
+                                    <Label text="{i18n>objectPageName}" />
+                                    <Text text="{presentation/referee/name}" />
+                                    <Label text="{i18n>objectPageBiographie}" />
+                                    <Text text="{presentation/referee/bio}" />
+
+                                   
+
+                                   
+
+                                    <core:Title
+                                        text="{i18n>objectPageAllgInformation}"
+                                    />
+                                    <Label text="{i18n>objectPageZeit}" />
+                                    <Text text="{presentation/timeslot}" />
+                                  
+
+                                     <Label text="{i18n>objectPageZimmer}" />
+                                    <Text text="{presentation/room/name}" />
+
+                                     <Label text="{i18n>objectPageRoomBeschreibung}" />
+                                    <Text text="{presentation/room/description}" />
+
+                                     <Label text="{i18n>objectPageLocation}" />
+                                    <Text text="{presentation/room/location}" />
+
+                                   
+                                </forms:SimpleForm>
+                            </content>
+                        </Panel>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+
+
+         <Table >
+            <columns>
+                <Column width="12em">
+                    <Text text="{i18n>objectPageInformationLageplan}" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem vAlign="Middle">
+                    <cells>
+                        <Panel
+                            expandable="true"
+                            expanded="true"
+                            width="auto"
+                            class="sapUiResponsiveMargin"
+                        >
+                            <content>
+                                <forms:SimpleForm
+                                    labelSpanL="4"
+                                    labelSpanM="4"
+                                    editable="false"
+                                    labelSpanS="4"
+                                    emptySpanL="0"
+                                    emptySpanM="0"
+                                    emptySpanS="0"
+                                    maxContainerCols="2"
+                                    layout="ResponsiveGridLayout"
+                                    width="100%"
+                                >
+                                    
+                                    
+                                   
+                                <FlexBox height="100px" alignItems="Center" justifyContent="Center">
+
+<items>
+
+<Image src="/Image/wankdorf.png"> </Image>
+
+</items>
+
+</FlexBox>
+                                   
+
+                                   
+
+                                   
+                                </forms:SimpleForm>
+                            </content>
+                        </Panel>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+
+        
+
+
+
+        <footer>
+            <Bar id="_IDGenBar1">
+                <contentRight />
+            </Bar>
+        </footer>
+    </Page>
+</mvc:View>
